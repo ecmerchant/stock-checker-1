@@ -31,8 +31,13 @@ class StocksController < ApplicationController
         @end_date = "-"
       end
 
-      @upload_date = @account.upload_date
-      @report_id = @account.report_id
+      if @account != nil then
+        @upload_date = @account.upload_date
+        @report_id = @account.report_id
+      else
+        @upload_date = "-"
+        @report_id = "-"
+      end
     else
       @total_sku = 0
       @start_date = "-"
