@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: MyString
+  seller_id: MyString
+  aws_token: MyString
+  relist_only: false
+  sku_limit: 1
+
+two:
+  user: MyString
+  seller_id: MyString
+  aws_token: MyString
+  relist_only: false
+  sku_limit: 1

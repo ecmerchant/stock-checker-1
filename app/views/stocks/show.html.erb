@@ -1,0 +1,38 @@
+<div class="page-header" id="banner">
+  <div class="row">
+    <div class="col-lg-8 col-md-7">
+      <h1>Stock Checker β</h1>
+      <p class="lead">アマゾン-ヤフオクの在庫管理システム</p>
+      <div style="display:inline-flex">
+      <%= form_tag(stocks_check_path) do %>
+        <%= submit_tag "監視開始", {onClick: 'alert("監視を開始します")'} %>
+      <% end %>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <%= form_tag(stocks_upload_path) do %>
+        <%= submit_tag "在庫改定", {onClick: 'alert("在庫改定を開始します")'} %>
+      <% end %>
+      </div>
+      <div class="page-header"><h2>実行状況</h2></div>
+      <table class="table table-striped table-hover table-bordered">
+        <thead class="thead-inverse">
+          <tr>
+            <th>監視対象件数</th>
+            <th>監視開始日時</th>
+            <th>監視終了日時</th>
+            <th>在庫改定日時</th>
+            <th>レポートID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @total_sku %></td>
+            <td><%= @start_date %></td>
+            <td><%= @end_date %></td>
+            <td><%= @upload_date %></td>
+            <td><%= @report_id %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
