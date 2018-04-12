@@ -19,8 +19,18 @@ class StocksController < ApplicationController
     @account = Account.find_by(user: user)
     if @stock != nil then
       @total_sku = @stock.count
-      @start_date = @stock.first.access_date
-      @end_date = @stock.last.access_date
+      if @stock.first != nil then
+        @start_date = @stock.first.access_date
+      else
+        @start_date = "-"
+      end
+
+      if @stock.last != nil then
+        @end_date = @stock.last.access_date
+      else
+        @end_date = "-"
+      end
+
       @upload_date = @account.upload_date
       @report_id = @account.report_id
     else
