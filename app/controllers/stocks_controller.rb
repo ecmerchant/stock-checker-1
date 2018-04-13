@@ -72,6 +72,11 @@ class StocksController < ApplicationController
     end
   end
 
+  def export
+    user = current_user.email
+    @stock = Stock.where(email: user)
+  end
+
   def check
     logger.debug("監視開始")
     user = current_user.email

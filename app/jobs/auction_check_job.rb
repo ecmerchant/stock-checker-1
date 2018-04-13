@@ -43,6 +43,7 @@ class AuctionCheckJob < ApplicationJob
         if auction == nil then
           logger.debug('Item is on sale')
           title = doc.xpath('//h1[@class="ProductTitle__text"]')[0].inner_text
+          title = title.strip
           tc = doc.xpath('//div[@class="Price Price--current"]')[0]
 
           if tc != nil then

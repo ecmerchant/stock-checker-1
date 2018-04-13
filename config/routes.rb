@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get 'stocks/show'
   get 'stocks/import'
   post 'stocks/import'
+  get 'stocks/export'
+  post 'stocks/export'
   get 'stocks/setup'
   post 'stocks/setup'
   get 'stocks/check'
@@ -14,10 +16,12 @@ Rails.application.routes.draw do
   post 'stocks/upload'
   get 'home/show'
 
+
   mount Resque::Server.new, at: "/resque"
 
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
+    get '/sign_in' => 'devise/sessions#new'
   end
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users, :controllers => {

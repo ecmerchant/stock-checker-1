@@ -1,0 +1,30 @@
+<div class="page-header" id="banner">
+  <div class="row">
+    <div class="col-lg-10 col-md-10">
+      <h1>SKUリストの表示</h1>
+      <div class="page-header"></div>
+      <div class="table-responsive">
+      <table class="table table-striped table-hover table-bordered">
+        <thead class="thead-inverse">
+          <tr>
+            <th width="15%">SKU</th>
+            <th width="40%">商品名</th>
+            <th width="20%">更新日時</th>
+            <th width="10%">在庫有無</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for temp in @stock %>
+          <tr>
+            <td><%= temp.sku %></td>
+            <td><%= temp.title%></td>
+            <td><%= temp.access_date %></td>
+            <td><%= temp.validity %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+</div>
