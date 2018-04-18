@@ -27,6 +27,12 @@
           </label>
         </div>
         </fieldset>
+        <p class="lead">在庫改定時の設定</p>
+        <div class="form-inline">
+          <%= f.label :leadtime, "リードタイム" %>
+          <%= f.text_field :leadtime, class: 'form-control'  %>
+        </div>
+        <br>
         <p class="lead">チャットワーク連携設定</p>
         <div class="form-group">
           <%= f.label :cw_api_token, "APIトークン" %>

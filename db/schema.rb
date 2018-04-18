@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180412141248) do
+ActiveRecord::Schema.define(version: 20180418125513) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "user"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20180412141248) do
     t.string   "cw_room_id"
     t.datetime "upload_date"
     t.string   "report_id"
+    t.integer  "leadtime"
   end
 
   create_table "stocks", force: :cascade do |t|
