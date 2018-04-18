@@ -11,6 +11,7 @@ class FeedUploadJob < ApplicationJob
       upload_date: Time.now,
       report_id: "実行中"
     )
+    leadtime = user.leadtime
     aws = ENV["AWS_ACCESS_KEY_ID"]
     skey = ENV["AWS_SECRET_ACCESS_KEY"]
     sid = user.seller_id
@@ -47,6 +48,10 @@ class FeedUploadJob < ApplicationJob
               end
             else
               buf[i] = data[k][1]
+            end
+          when 5 then
+            if leadtime != nil then
+              buf[i] = leadtime
             end
           when 6 then
             buf[i] = "PartialUpdate"

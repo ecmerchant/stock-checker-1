@@ -11,6 +11,22 @@
         <%= submit_tag "インポート", class: "form-control-button" %>
       <% end %>
 
+      <% if flash[:alarm] %>
+        <br>
+        <br>
+        <div class="alert alert-danger col-sm-3">
+          <%= flash[:alarm] %>
+        </div>
+      <% end %>
+
+      <% if flash[:success] %>
+        <br>
+        <br>
+        <div class="alert alert-success col-sm-3">
+          <%= flash[:success] %>
+        </div>
+      <% end %>
+
     </div>
   </div>
 </div>
