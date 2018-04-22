@@ -1,0 +1,113 @@
+<style type="text/css">
+table.table-headerfixed {
+/*    width: 100%;*/
+}
+
+table.table-headerfixed thead,
+table.table-headerfixed tbody,
+table.table-headerfixed tr,
+table.table-headerfixed td,
+table.table-headerfixed th {
+    display: block;
+}
+
+table.table-headerfixed tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+table.table-headerfixed tbody {
+    height: 290px;
+    overflow-y: scroll;
+}
+
+table.table-headerfixed thead {
+    /* fallback */
+    width: 97%;
+    /* minus scroll bar width */
+    width: calc(100% - 17px);
+}
+
+table.table-headerfixed tbody td,
+table.table-headerfixed thead th {
+    float: left;
+    height: 60px;
+}
+
+.ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+</style>
+
+<script type="text/javascript">
+function submitbtn() {
+    // 「OK」ボタン押下時
+    if (confirm('実行しますか？')) {
+        alert('OK');
+    }
+    // 「キャンセル」ボタン押下時
+    else {
+        alert('キャンセル');
+    }
+}
+</script>
+
+<div class="page-header" id="banner">
+  <div class="row">
+    <div class="col-lg-10 col-md-10">
+      <h1>SKUリストの表示</h1>
+
+      <p class="lead">削除の場合はSKU記載ファイルをインポート</p>
+      <%= form_tag({controller: "stocks", action: "list", method: "post"}, {multipart: true}) do %>
+        <div class="form-inline">
+        <div class="form-group" style="width: 350px">
+          <%= file_field_tag :file %>
+        </div>
+        <%= submit_tag "インポート", class: "form-control-button" %>
+      </div>
+      <% end %>
+      <br>
+
+      <table class="table table-striped table-hover table-bordered table-headerfixed">
+        <thead class="thead-inverse">
+          <tr>
+            <th width="15%">SKU</th>
+            <th width="50%">商品名</th>
+            <th width="20%">更新日時</th>
+            <th width="15%">在庫有無</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for temp in @stock %>
+          <tr>
+            <td width="15%"><%= temp.sku %></td>
+            <td width="50%"><%= temp.title%></td>
+            <td width="20%"><%= temp.access_date %></td>
+            <td width="15%"><%= temp.validity %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% if flash[:alarm] %>
+        <br>
+        <br>
+        <div class="alert alert-danger col-sm-3">
+          <%= flash[:alarm] %>
+        </div>
+      <% end %>
+
+      <% if flash[:success] %>
+        <br>
+        <br>
+        <div class="alert alert-success col-sm-3">
+          <%= flash[:success] %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -82,9 +82,38 @@ class StocksController < ApplicationController
     end
   end
 
-  def export
+  def list
+    flash[:normal]
     user = current_user.email
     @stock = Stock.where(email: user)
+    if request.post?
+      logger.debug("\n\nStart Debug!!")
+      data = params[:file]
+      logger.debug("\n\n")
+      tuser = current_user.email
+
+      if data != nil then
+        csv = CSV.table(data.path)
+        logger.debug("data is ok")
+        logger.debug(csv.headers)
+        if csv.headers.include?(:sku) then
+          logger.debug("sku header")
+          td = csv[:sku]
+          for snum in td
+            dstock = @stock.find_by(sku: snum)
+            if dstcok != nil then
+              dstock.delete
+            end
+          end
+          flash[:success] = "削除成功"
+        elsif csv.headers.include?(:deleteall) then
+          logger.debug("data is delete")
+          skus = Stock.where(email: tuser)
+          skus.delete_all
+          flash[:success] = "全SKU削除成功"
+        end
+      end
+    end
   end
 
   def check
