@@ -65,14 +65,16 @@ function submitbtn() {
       <p class="lead">削除の場合はSKU記載ファイルをインポート</p>
       <%= form_tag({controller: "stocks", action: "list", method: "post"}, {multipart: true}) do %>
         <div class="form-inline">
-        <div class="form-group" style="width: 350px">
-          <%= file_field_tag :file %>
+          <div class="form-group" style="width: 350px">
+            <%= file_field_tag :file %>
+          </div>
+          <%= submit_tag "インポート", class: "form-control-button" %>
         </div>
-        <%= submit_tag "インポート", class: "form-control-button" %>
-      </div>
       <% end %>
       <br>
-
+      <%= link_to "CSV出力", stocks_download_path(format: :csv), class: "btn btn-primary" %>
+      <br>
+      <br>
       <table class="table table-striped table-hover table-bordered table-headerfixed">
         <thead class="thead-inverse">
           <tr>

@@ -116,6 +116,18 @@ class StocksController < ApplicationController
     end
   end
 
+  def download
+    user = current_user.email
+    @stock = Stock.where(email: user)
+    d = Date.today
+    str = d.strftime("%Y%m%d")
+    respond_to do |format|
+      format.csv do
+        send_data render_to_string, filename: "sku_list_" + str + ".csv", type: :csv
+      end
+    end
+  end
+
   def check
     logger.debug("監視開始")
     user = current_user.email
