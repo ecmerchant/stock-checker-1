@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180418142203) do
+ActiveRecord::Schema.define(version: 20180503065123) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "user"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20180418142203) do
     t.string   "report_id"
     t.integer  "leadtime"
     t.string   "sku_header"
+    t.boolean  "delete_sku"
   end
 
   create_table "stocks", force: :cascade do |t|
@@ -39,6 +40,7 @@ ActiveRecord::Schema.define(version: 20180418142203) do
     t.boolean  "validity"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.boolean  "expired"
   end
 
   create_table "users", force: :cascade do |t|

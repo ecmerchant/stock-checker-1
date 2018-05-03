@@ -77,18 +77,20 @@ function submitbtn() {
         <thead class="thead-inverse">
           <tr>
             <th width="15%">SKU</th>
-            <th width="50%">商品名</th>
+            <th width="45%">商品名</th>
             <th width="20%">更新日時</th>
-            <th width="15%">在庫有無</th>
+            <th width="10%">在庫有無</th>
+            <th width="10%">期限切れ</th>
           </tr>
         </thead>
         <tbody>
           <% for temp in @stock %>
           <tr>
             <td width="15%"><%= temp.sku %></td>
-            <td width="50%"><%= temp.title%></td>
+            <td width="45%"><%= temp.title%></td>
             <td width="20%"><%= temp.access_date %></td>
-            <td width="15%"><%= temp.validity %></td>
+            <td width="10%"><%= temp.validity %></td>
+            <td width="10%"><%= temp.expired %></td>
           </tr>
           <% end %>
         </tbody>

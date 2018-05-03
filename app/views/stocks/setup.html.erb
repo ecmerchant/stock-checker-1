@@ -12,7 +12,7 @@
           <%= f.label :aws_token, "MWS認証トークン" %>
           <%= f.text_field :aws_token, class: 'form-control'  %>
         </div>
-        <p class="lead">在庫チェック時の設定</p>
+        <p class="lead">在庫チェック時の出品設定</p>
         <fieldset class="form-group">
         <div class="form-check">
           <label class="form-check-label">
@@ -24,6 +24,21 @@
           <label class="form-check-label">
             <%= f.radio_button 'relist_only', 'true', {class: 'form-check-input'}  %>
             再出品のみ有効
+          </label>
+        </div>
+        </fieldset>
+        <p class="lead">オークションID期限切れ時の設定</p>
+        <fieldset class="form-group">
+        <div class="form-check">
+          <label class="form-check-label">
+            <%= f.radio_button 'delete_sku', 'true', {class: 'form-check-input'}  %>
+            アマゾンからSKUごと削除
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <%= f.radio_button 'delete_sku', 'false', {class: 'form-check-input'}  %>
+            出品取り下げのみ
           </label>
         </div>
         </fieldset>

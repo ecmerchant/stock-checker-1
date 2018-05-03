@@ -20,7 +20,8 @@ class SkuImportJob < ApplicationJob
         fixed_price: nil,
         quantity: nil,
         access_date: nil,
-        validity: nil
+        validity: nil,
+        expired: false
       )
     end
   end

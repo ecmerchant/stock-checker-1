@@ -12,6 +12,7 @@ class FeedUploadJob < ApplicationJob
       report_id: "実行中"
     )
     leadtime = user.leadtime
+    delete_sku = user.delete_sku
     aws = ENV["AWS_ACCESS_KEY_ID"]
     skey = ENV["AWS_SECRET_ACCESS_KEY"]
     sid = user.seller_id
@@ -28,7 +29,7 @@ class FeedUploadJob < ApplicationJob
     )
     relist = user.relist_only
     stock = Stock.where(email: cuser)
-    data = stock.pluck(:sku, :quantity, :validity)
+    data = stock.pluck(:sku, :quantity, :validity, :expired)
     feed_body = ""
     logger.debug(data)
     k = 0
@@ -54,7 +55,15 @@ class FeedUploadJob < ApplicationJob
               buf[i] = leadtime
             end
           when 6 then
-            buf[i] = "PartialUpdate"
+            if delete_sku == true then
+              if data[k][3] == true then
+                buf[i] = "Delete"
+              else
+                buf[i] = "PartialUpdate"
+              end
+            else
+              buf[i] = "PartialUpdate"
+            end
         end
       end
       feed_body = feed_body + buf.join("\t")

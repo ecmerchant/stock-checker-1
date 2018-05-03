@@ -101,7 +101,7 @@ class StocksController < ApplicationController
           td = csv[:sku]
           for snum in td
             dstock = @stock.find_by(sku: snum)
-            if dstcok != nil then
+            if dstock != nil then
               dstock.delete
             end
           end
@@ -133,10 +133,9 @@ class StocksController < ApplicationController
     redirect_to stocks_show_path
   end
 
-
   private
   def user_params
-     params.require(:account).permit(:user, :seller_id, :aws_token, :relist_only, :sku_limit, :sku_header, :cw_room_id, :cw_api_token, :leadtime)
+     params.require(:account).permit(:user, :seller_id, :aws_token, :relist_only, :sku_limit, :sku_header, :cw_room_id, :cw_api_token, :leadtime, :delete_sku)
   end
 
 end

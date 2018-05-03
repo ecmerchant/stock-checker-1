@@ -40,6 +40,7 @@ class AuctionCheckJob < ApplicationJob
         auction = doc.xpath('//p[@class="ptsFin"]')[0] #オークションが終了かチェック
         logger.debug("Get Html body")
         quantity = 0
+        expired = false
         if auction == nil then
           logger.debug('Item is on sale')
           title = doc.xpath('//h1[@class="ProductTitle__text"]')[0].inner_text
@@ -153,6 +154,7 @@ class AuctionCheckJob < ApplicationJob
         rest = 0
         bcheck = false
         rcheck = false
+        expired = true
       end
       logger.debug('Start updating table')
 
@@ -171,7 +173,8 @@ class AuctionCheckJob < ApplicationJob
         fixed_price: bPrice,
         access_date: Time.now,
         quantity: quantity,
-        validity: isValid
+        validity: isValid,
+        expired: expired
       )
       ObjectSpace.each_object(ActiveRecord::Relation).each(&:reset)
       GC.start
