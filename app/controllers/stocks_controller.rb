@@ -137,6 +137,16 @@ class StocksController < ApplicationController
     redirect_to stocks_show_path
   end
 
+  def delete
+    if request.post?
+      tuser = current_user.email
+      skus = Stock.where(email: tuser)
+      skus.delete_all
+      flash[:success] = "全SKU削除成功"
+    end
+    redirect_to stocks_setup_path
+  end
+
   def upload
     logger.debug("\n\n")
     logger.debug("Upload Start")

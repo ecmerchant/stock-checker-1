@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   post 'stocks/upload'
   get 'stocks/download'
 
+  post 'stocks/delete'
+
   get 'home/show'
 
 

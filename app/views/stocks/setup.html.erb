@@ -62,6 +62,17 @@
           <%= f.submit "設定する", {id: "setup_btn", onClick: 'alert("更新しました")'} %>
         </div>
       <% end %>
+      <br><br>
+      <%= form_tag({controller: "stocks", action: "delete", method: "post"}) do %>
+        <%= submit_tag "SKU全削除", class: "btn btn-danger" %>
+      <% end %>
+      <% if flash[:success] %>
+        <br>
+        <br>
+        <div class="alert alert-success col-sm-3">
+          <%= flash[:success] %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
