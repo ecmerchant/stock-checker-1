@@ -57,7 +57,7 @@ class StocksController < ApplicationController
       maxsku = Account.find_by(user: tuser).sku_limit
       st = Stock.where(email: tuser).count
 
-      if st > maxsku then
+      if st > maxsku.to_i then
         flash[:alarm] = "SKUが上限数を超えています"
         redirect_to stocks_import_path
       else
