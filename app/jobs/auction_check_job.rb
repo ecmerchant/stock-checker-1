@@ -28,7 +28,7 @@ class AuctionCheckJob < ApplicationJob
 #      uanum = ua.length
 #      user_agent = ua[rand(uanum)][0]
       charset = nil
-      rt = rand(10)*0.1+0.2
+      rt = rand(5)*0.1+0.1
       sleep(rt)
       begin
         logger.debug("Access URL")
