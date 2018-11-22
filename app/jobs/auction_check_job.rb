@@ -1,6 +1,7 @@
 class AuctionCheckJob < ApplicationJob
 
-  queue_as :default
+  queue_as :auction_check
+  
   require 'typhoeus'
   require 'objspace'
   require 'date'
@@ -28,7 +29,7 @@ class AuctionCheckJob < ApplicationJob
 #      uanum = ua.length
 #      user_agent = ua[rand(uanum)][0]
       charset = nil
-      rt = rand(5)*0.1+0.1
+      rt = rand(4)*0.1
       sleep(rt)
       begin
         logger.debug("Access URL")

@@ -1,5 +1,5 @@
 class SkuImportJob < ApplicationJob
-  queue_as :default
+  queue_as :sku_import
 
   def perform(csv, user)
     # Do something later

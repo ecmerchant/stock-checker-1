@@ -1,5 +1,6 @@
 class FeedUploadJob < ApplicationJob
-  queue_as :default
+  queue_as :feed_upload
+  
   require 'csv'
   require 'peddler'
 
