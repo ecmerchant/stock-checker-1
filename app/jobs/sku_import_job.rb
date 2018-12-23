@@ -4,6 +4,7 @@ class SkuImportJob < ApplicationJob
   def perform(csv, user)
     # Do something later
     logger.debug("Import sku starts")
+    maxsku = Account.find_by(user: user).sku_limit.to_i
     for row in csv do
       sku = row.to_s
       sku.gsub!(" ", "")
@@ -23,6 +24,9 @@ class SkuImportJob < ApplicationJob
         validity: nil,
         expired: false
       )
+      if Stock.where(email: user).count > maxsku then
+        break
+      end
     end
   end
 end

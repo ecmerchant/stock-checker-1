@@ -1,7 +1,7 @@
 class AuctionCheckJob < ApplicationJob
 
   queue_as :auction_check
-  
+
   require 'typhoeus'
   require 'objspace'
   require 'date'
@@ -191,6 +191,7 @@ class AuctionCheckJob < ApplicationJob
     end
     msg = "ヤフオク監視終了しました\n処理終了日時：" + Time.now.to_s + "\n処理対象：" + tag.length.to_s + "件"
     msend(msg, token, rid)
+    FeedUploadJob.perform_later(cuser)
   end
 
   def msend(message, api_token, room_id)
