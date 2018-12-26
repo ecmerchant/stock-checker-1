@@ -27,7 +27,7 @@ class FeedUploadJob < ApplicationJob
     header = CSV.read('public/Flat_File_Price_Inventory_Updates_JP.csv', encoding: "Shift_JIS:UTF-8")
     logger.debug("==== first check ====")
     client = MWS.feeds(
-      marketplace: "A1VC38T7YXB528",
+      primary_marketplace_id: "A1VC38T7YXB528",
       merchant_id: sid,
       aws_access_key_id: aws,
       aws_secret_access_key: skey,
