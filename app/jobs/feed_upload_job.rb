@@ -3,6 +3,11 @@ class FeedUploadJob < ApplicationJob
 
   require 'csv'
   require 'peddler'
+  
+  rescue_from(StandardError) do |exception|
+    logger.debug("===== Standard Error Escape Active Job ======")
+    logger.error exception
+  end
 
   def perform(cuser)
     # Do something later
@@ -20,7 +25,7 @@ class FeedUploadJob < ApplicationJob
     token = user.aws_token
 
     header = CSV.read('public/Flat_File_Price_Inventory_Updates_JP.csv', encoding: "Shift_JIS:UTF-8")
-
+    logger.debug("==== first check ====")
     client = MWS.feeds(
       marketplace: "A1VC38T7YXB528",
       merchant_id: sid,
@@ -32,6 +37,7 @@ class FeedUploadJob < ApplicationJob
     stock = Stock.where(email: cuser)
     data = stock.pluck(:sku, :quantity, :validity, :expired)
     feed_body = ""
+    logger.debug("==== second check ====")
     logger.debug(data)
     k = 0
     while k < data.length
