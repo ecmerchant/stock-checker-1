@@ -5,8 +5,9 @@ class SkuImportJob < ApplicationJob
     # Do something later
     logger.debug("Import sku starts")
     maxsku = Account.find_by(user: user).sku_limit.to_i
+    csv = csv.drop(1)
     for row in csv do
-      sku = row.to_s
+      sku = row[0].to_s
       sku.gsub!(" ", "")
       sku.gsub!("\n", "")
       sku.gsub!("\r", "")

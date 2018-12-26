@@ -8,8 +8,14 @@ class AuctionCheckJob < ApplicationJob
   require 'peddler'
   require 'csv'
 
+  rescue_from(StandardError) do |exception|
+    logger.debug("===== Standard Error Escape Active Job ======")
+    logger.error exception
+  end
+
+
   def perform(cuser)
-    # Do something later
+
     logger.debug("Process Start")
     #ua = CSV.read('app/others/User-Agent.csv', headers: false, col_sep: "\t")
     stock = Stock.where(email: cuser)
@@ -23,16 +29,30 @@ class AuctionCheckJob < ApplicationJob
     msg = "ヤフオク監視開始\n処理開始日時：" + std + "\n処理対象：" + tag.length.to_s + "件"
     logger.debug(msg)
     msend(msg, token, rid)
+
+    time_counter1 = Time.now.strftime('%s%L').to_i
+
     tag.each do |sku|
-      url = 'https://page.auctions.yahoo.co.jp/jp/auction/' + sku
+      url = 'https://page.auctions.yahoo.co.jp/jp/auction/' + sku.to_s
+      charset = nil
       logger.debug(url)
 #      uanum = ua.length
 #      user_agent = ua[rand(uanum)][0]
-      charset = nil
-      rt = rand(4)*0.1
-      sleep(rt)
+#      rt = 0.7 + rand(2)*0.1
+#      sleep(rt)
+
+      time_counter2 = Time.now.strftime('%s%L').to_i
+      diff_time = time_counter2 - time_counter1
+      while diff_time < 800.0 do
+        sleep(0.02)
+        time_counter2 = Time.now.strftime('%s%L').to_i
+        diff_time = time_counter2 - time_counter1
+      end
+      time_counter1 = Time.now.strftime('%s%L').to_i
+
       begin
-        logger.debug("Access URL")
+        logger.debug(diff_time)
+        logger.debug("==== Access URL ====")
         request = Typhoeus::Request.new(url)
         request.run
         html = request.response.body
@@ -179,7 +199,7 @@ class AuctionCheckJob < ApplicationJob
       )
       ObjectSpace.each_object(ActiveRecord::Relation).each(&:reset)
       GC.start
-      logger.debug('Process end')
+      logger.debug('==== Process end ====')
       counter = counter + 1
       tcounter = tcounter + 1
       if tcounter > 1000 then
@@ -205,7 +225,7 @@ class AuctionCheckJob < ApplicationJob
     )
     request.run
     res = request.response.body
-    logger.debug(res)
+#    logger.debug(res)
   end
 
 end

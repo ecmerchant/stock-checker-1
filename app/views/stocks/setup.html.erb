@@ -1,6 +1,6 @@
 <div class="page-header" id="banner">
   <div class="row">
-    <div class="col-lg-6 col-md-10">
+    <div class="col-lg-8">
       <h1>在庫管理機能の設定</h1>
       <%= form_for(@account, {url: stocks_setup_path, method: 'post'}) do |f| %>
         <p class="lead">MWSアカウントの設定</p>
@@ -44,11 +44,11 @@
         </fieldset>
         <p class="lead">在庫改定時の設定</p>
         <div class="form-group">
-          <%= f.label :leadtime, "リードタイム" %>
+          <%= f.label :leadtime, "リードタイム ※在庫改定CSVに記載する発送までの日数、数字を記入" %>
           <%= f.text_field :leadtime, class: 'form-control'  %>
         </div>
         <br>
-        <p class="lead">チャットワーク連携設定</p>
+        <p class="lead">チャットワーク連携設定 <small>※在庫監視の経過状況をチャットワークで通知</small></p>
         <div class="form-group">
           <%= f.label :cw_api_token, "APIトークン" %>
           <%= f.text_field :cw_api_token, class: 'form-control' %>

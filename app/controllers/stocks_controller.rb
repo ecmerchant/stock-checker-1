@@ -54,6 +54,10 @@ class StocksController < ApplicationController
       data = params[:file]
       logger.debug("\n\n")
       tuser = current_user.email
+      @account = Account.find_by(user: tuser)
+      if @account.sku_limit == nil then
+        @account.update(sku_limit: 20000)
+      end
       maxsku = Account.find_by(user: tuser).sku_limit
       st = Stock.where(email: tuser).count
 
@@ -62,11 +66,18 @@ class StocksController < ApplicationController
         redirect_to stocks_import_path
       else
         if data != nil then
-          csv = CSV.table(data.path)
-          if csv.headers.include?(:sku) then
+          temp = File.open(data.path)
+          body = temp.read
+          new_body = body.gsub(/\R/, "\n")
+          #csv = CSV.table(data.path)
+          csv = CSV.parse(new_body)
+          logger.debug(csv[0])
+          #if csv.headers.include?(:sku) then
+          if csv[0][0] == "sku" then
             logger.debug("sku header")
-            td = csv[:sku]
-            SkuImportJob.perform_later(td,current_user.email)
+            #td = csv[:sku]
+            td = csv
+            SkuImportJob.perform_later(td, current_user.email)
             flash[:success] = "インポート成功"
           end
         end
@@ -77,6 +88,9 @@ class StocksController < ApplicationController
   def setup
     user = current_user.email
     @account = Account.find_or_create_by(user: user)
+    if @account.sku_limit == nil then
+      @account.update(sku_limit: 20000)
+    end
     if request.post? then
       @account.update(user_params)
     end
