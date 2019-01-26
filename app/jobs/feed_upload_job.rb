@@ -42,12 +42,12 @@ class FeedUploadJob < ApplicationJob
     k = 0
     while k < data.length
       buf = []
-      for i in 0..15
+      for i in 0..13
         buf[i] = ""
         case i
           when 0 then
             buf[i] = data[k][0]
-          when 4 then
+          when 3 then
             if relist == true then
               if data[k][2] == true then
                 buf[i] = data[k][1]
@@ -57,19 +57,9 @@ class FeedUploadJob < ApplicationJob
             else
               buf[i] = data[k][1]
             end
-          when 5 then
+          when 13 then
             if leadtime != nil then
               buf[i] = leadtime
-            end
-          when 6 then
-            if delete_sku == true then
-              if data[k][3] == true then
-                buf[i] = "Delete"
-              else
-                buf[i] = "PartialUpdate"
-              end
-            else
-              buf[i] = "PartialUpdate"
             end
         end
       end
