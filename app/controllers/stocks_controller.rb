@@ -16,7 +16,11 @@ class StocksController < ApplicationController
   def show
     user = current_user.email
     @stock = Stock.where(email: user)
-    @account = Account.find_by(user: user)
+    @account = Account.find_or_create_by(user: user)
+    if @account.sku_limit == nil then
+      @account.update(sku_limit: 20000)
+    end
+    
     if @stock != nil then
       @total_sku = @stock.count
       if @stock.first != nil then
