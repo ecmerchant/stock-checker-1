@@ -20,7 +20,7 @@ class StocksController < ApplicationController
     if @account.sku_limit == nil then
       @account.update(sku_limit: 20000)
     end
-    
+
     if @stock != nil then
       @total_sku = @stock.count
       if @stock.first != nil then
@@ -103,7 +103,7 @@ class StocksController < ApplicationController
   def list
     flash[:normal]
     user = current_user.email
-    @stock = Stock.where(email: user)
+    @stock = Stock.where(email: user).limit(20000)
     if request.post?
       logger.debug("\n\nStart Debug!!")
       data = params[:file]
