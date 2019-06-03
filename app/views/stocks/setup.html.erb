@@ -57,7 +57,6 @@
           <%= f.label :cw_room_id, "ルームID" %>
           <%= f.text_field :cw_room_id, class: 'form-control'  %>
         </div>
-        <%= f.hidden_field :sku_limit, value: 50000 %>
         <div class="actions">
           <%= f.submit "設定する", {id: "setup_btn", onClick: 'alert("更新しました")'} %>
         </div>
