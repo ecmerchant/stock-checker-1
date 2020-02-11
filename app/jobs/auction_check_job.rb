@@ -22,6 +22,11 @@ class AuctionCheckJob < ApplicationJob
     tag = stock.pluck(:sku)
     counter = 0
     tcounter = 0
+    acounter = 0
+
+    admin_token = ENV['ADMIN_TOKEN']
+    admin_rid = ENV['ADMIN_ROOM_ID']
+
     account = Account.find_by(user: cuser)
     token = account.cw_api_token
     rid = account.cw_room_id
@@ -29,6 +34,12 @@ class AuctionCheckJob < ApplicationJob
     msg = "ヤフオク監視開始\n処理開始日時：" + std + "\n処理対象：" + tag.length.to_s + "件"
     logger.debug(msg)
     msend(msg, token, rid)
+
+    if admin_token != nil && admin_rid != nil then
+      nmsg = "ユーザ：" + cuser.to_s + "\n" + msg
+      msend(nmsg, admin_token, admin_rid)
+    end
+
 
     time_counter1 = Time.now.strftime('%s%L').to_i
 
@@ -208,9 +219,26 @@ class AuctionCheckJob < ApplicationJob
         msend(msg, token, rid)
         tcounter = 0
       end
+
+      if acounter > 10000 then
+        msg = "ヤフオク監視途中経過\n処理開始日時：" + std + "\n処理対象：" + tag.length.to_s + "件"
+        msg = msg + "\nヤフオク監視途中経過\n中間経過日時：" + Time.now.to_s + "\n処理済み：" + counter.to_s + "件"
+        if admin_token != nil && admin_rid != nil then
+          nmsg = "ユーザ：" + cuser.to_s + "\n" + msg
+          msend(nmsg, admin_token, admin_rid)
+        end
+        acounter = 0
+      end
+
     end
     msg = "ヤフオク監視終了しました\n処理終了日時：" + Time.now.to_s + "\n処理対象：" + tag.length.to_s + "件"
     msend(msg, token, rid)
+
+    if admin_token != nil && admin_rid != nil then
+      nmsg = "ユーザ：" + cuser.to_s + "\n" + msg
+      msend(nmsg, admin_token, admin_rid)
+    end
+
     FeedUploadJob.perform_later(cuser)
   end
 

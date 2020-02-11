@@ -7,11 +7,26 @@ class StocksController < ApplicationController
   require 'peddler'
   require 'typhoeus'
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:regist]
+  protect_from_forgery :except => [:regist]
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
   end
+
+  def regist
+    if request.post? then
+      user = params[:email]
+      pass = params[:password]
+      us = User.find_or_initialize_by(email: user)
+      us.update(
+        password: pass,
+        admin_flg: false
+      )
+    end
+    redirect_to root_url
+  end
+
 
   def show
     user = current_user.email

@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.6.3'
+
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
@@ -13,7 +15,7 @@ gem 'sqlite3', :group => [:development, :test]
 # Use postgreSQL as the database for Active Record
 gem 'pg', :group => :production
 # Use Puma as the app server
-gem 'puma', '~> 3.0'
+gem "puma", ">= 3.12.2"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -64,7 +66,7 @@ gem 'cancancan'
 gem 'rails_admin'
 
 # gem for Bootstrap
-gem 'bootstrap-sass'
+gem "bootstrap-sass", ">= 3.4.1"
 gem 'rails_12factor'
 gem 'jquery-turbolinks'
 

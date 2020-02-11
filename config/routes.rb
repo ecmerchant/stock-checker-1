@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   post 'stocks/delete'
 
+  post 'stocks/regist'
+
   get 'home/show'
 
 
