@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.6'
+gem 'rails', ">= 5.0.7"
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', :group => [:development, :test]
 # Use postgreSQL as the database for Active Record
@@ -55,11 +55,11 @@ end
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #gem for html parse
-gem 'nokogiri'
+gem "nokogiri", ">= 1.10.4"
 gem 'gon'
 
 # gem for administration
-gem 'devise'
+gem "devise", ">= 4.7.1"
 gem 'cancancan'
 gem 'rails_admin'
 
