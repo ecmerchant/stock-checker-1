@@ -43,7 +43,7 @@ class AuctionCheckJob < ApplicationJob
 
       time_counter2 = Time.now.strftime('%s%L').to_i
       diff_time = time_counter2 - time_counter1
-      while diff_time < 800.0 do
+      while diff_time < 500.0 do
         sleep(0.02)
         time_counter2 = Time.now.strftime('%s%L').to_i
         diff_time = time_counter2 - time_counter1
