@@ -82,3 +82,5 @@ gem 'typhoeus'
 
 # gem for AmazonMWS
 gem 'peddler'
+
+gem "excon", ">= 0.71.0"
