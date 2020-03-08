@@ -17,11 +17,11 @@ class StocksController < ApplicationController
   def regist
     if request.post? then
       user = params[:email]
-      pass = params[:password]
+      password = params[:password]
       limit = params[:limit]
-      new_user = User.find_or_create_by(email: user)
+      new_user = User.find_or_initialize_by(email: user)
       new_user.update(
-        password: pass,
+        password: password,
         admin_flg: false
       )
       account = Account.find_or_create_by(user: user)
