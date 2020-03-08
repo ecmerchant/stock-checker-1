@@ -18,11 +18,14 @@ class StocksController < ApplicationController
     if request.post? then
       user = params[:email]
       pass = params[:password]
-      us = User.find_or_initialize_by(email: user)
-      us.update(
+      limit = params[:limit]
+      new_user = User.find_or_create_by(email: user)
+      new_user.update(
         password: pass,
         admin_flg: false
       )
+      account = Account.find_or_create_by(user: user)
+      account.update(sku_limit: limit.to_i)
     end
     redirect_to root_url
   end
@@ -30,6 +33,7 @@ class StocksController < ApplicationController
 
   def show
     user = current_user.email
+    @admin_flg = current_user.admin_flg
     @stock = Stock.where(email: user)
     @account = Account.find_or_create_by(user: user)
     if @account.sku_limit == nil then

@@ -85,6 +85,13 @@
               <li class="nav-item active">
                 <a href="/users/sign_out" class="nav-link">Log out</a>
               </li>
+              <% if @admin_flg != nil then %>
+                <% if @admin_flg == true then %>
+                  <li class="nav-item active">
+                    <a href="/admin" class="nav-link">管理画面</a>
+                  </li>
+                <% end %>
+              <% end %>
             </ul>
           </div>
         </div>
